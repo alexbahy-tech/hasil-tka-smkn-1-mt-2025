@@ -3,690 +3,666 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard TKA 2025 - SMKN 1 Maluku Tengah</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Laporan Hasil Tes Kemampuan Akademik SMK 2025</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: linear-gradient(135deg, #1e3a8a 0%, #312e81 25%, #581c87 50%, #0c4a6e 75%, #164e63 100%);
-            color: #f8fafc; 
-            overflow-x: hidden;
-            min-height: 100vh;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .glass { 
-            background: rgba(15, 23, 42, 0.75); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(148, 163, 184, 0.3);
-            transition: all 0.3s ease;
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
         }
-        .glass:hover { 
-            background: rgba(15, 23, 42, 0.85); 
-            border-color: rgba(148, 163, 184, 0.5);
-            transform: translateY(-2px);
-        }
-        .gradient-text { 
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 25%, #60a5fa 50%, #a78bfa 75%, #c084fc 100%); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(251, 191, 36, 0.3), 0 15px 35px rgba(96, 165, 250, 0.25);
-        }
-        .stat-badge {
-            position: relative;
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-        .stat-badge::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header h2 {
+            font-size: 24px;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+        
+        .school-info {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .school-info p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .stat-card h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.5s;
+            border-collapse: collapse;
+            background: white;
         }
-        .stat-badge:hover::before {
-            left: 100%;
+        
+        thead {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
         }
-        .progress-bar {
-            position: relative;
-            height: 8px;
-            background: rgba(30, 41, 59, 0.6);
+        
+        tbody tr:hover {
+            background: #f5f7fa;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .rank-badge {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .rank-1 { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0 0%, #808080 100%); }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32 0%, #8B4513 100%); }
+        
+        .highlight-row {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe0b3 100%);
+            font-weight: 600;
+        }
+        
+        .chart-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f5f7fa;
             border-radius: 10px;
+        }
+        
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .bar-label {
+            width: 250px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .bar-wrapper {
+            flex: 1;
+            background: #e0e0e0;
+            border-radius: 20px;
+            height: 30px;
+            position: relative;
             overflow: hidden;
         }
-        .progress-fill {
+        
+        .bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #fbbf24, #f59e0b, #60a5fa, #a78bfa);
-            border-radius: 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
             transition: width 1s ease;
         }
-        .chart-container {
-            position: relative;
-            height: 300px;
+        
+        .bar-wajib { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .bar-pilihan { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 5px solid #f5576c;
         }
-        .bar {
-            position: absolute;
-            bottom: 0;
-            width: 30px;
-            background: linear-gradient(180deg, #fbbf24, #f59e0b);
-            border-radius: 8px 8px 0 0;
-            transition: all 0.3s ease;
-        }
-        .bar:hover {
-            background: linear-gradient(180deg, #60a5fa, #a78bfa);
-            transform: scaleY(1.05);
-        }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .glow {
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.4), 0 0 60px rgba(96, 165, 250, 0.3);
-        }
-        .tab-button {
-            transition: all 0.3s ease;
-            position: relative;
-            color: #e2e8f0;
-        }
-        .tab-button.active {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b, #60a5fa);
-            color: #0f172a;
-            font-weight: 700;
-        }
-        .tab-button.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, #fbbf24, #60a5fa, #a78bfa);
-        }
-        .sparkle {
-            position: relative;
-        }
-        .sparkle::after {
-            content: '✨';
-            position: absolute;
-            top: -10px;
-            right: -10px;
+        
+        .summary-box h3 {
+            color: #d63031;
+            margin-bottom: 15px;
             font-size: 20px;
-            animation: sparkle 2s ease-in-out infinite;
         }
-        @keyframes sparkle {
-            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        
+        .summary-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .summary-box li {
+            padding: 8px 0;
+            color: #333;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .summary-box li:before {
+            content: "✓ ";
+            color: #00b894;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .stat-card:hover {
+                transform: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header h2 {
+                font-size: 18px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .bar-label {
+                width: 150px;
+                font-size: 12px;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 10px 5px;
+            }
         }
     </style>
 </head>
-<body class="p-4 md:p-8 lg:p-12">
-
-    <div class="max-w-[1600px] mx-auto">
-        <!-- Header -->
-        <header class="mb-12 text-center">
-            <div class="inline-flex items-center gap-3 px-6 py-2 rounded-full glass mb-6 float-animation">
-                <span class="text-yellow-300 text-2xl">🎓</span>
-                <span class="text-xs font-bold tracking-widest text-yellow-300 mono">TKA 2025 ANALYTICS</span>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tight text-white">
-                ANALISIS <span class="gradient-text">AKADEMIK</span>
-            </h1>
-            <p class="text-slate-200 text-lg max-w-2xl mx-auto">
-                Dashboard interaktif prestasi akademik SMK Negeri 1 Maluku Tengah
-            </p>
-            <div class="mt-6 flex justify-center gap-4 flex-wrap">
-                <div class="glass px-6 py-3 rounded-2xl">
-                    <span class="text-slate-300 text-xs block font-medium">Total Peserta</span>
-                    <span class="text-2xl font-bold gradient-text">138</span>
-                </div>
-                <div class="glass px-6 py-3 rounded-2xl">
-                    <span class="text-slate-300 text-xs block font-medium">Mata Pelajaran</span>
-                    <span class="text-2xl font-bold gradient-text">15+</span>
-                </div>
-                <div class="glass px-6 py-3 rounded-2xl">
-                    <span class="text-slate-300 text-xs block font-medium">Rata-rata Tertinggi</span>
-                    <span class="text-2xl font-bold gradient-text">76.77</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Tab Navigation -->
-        <div class="flex gap-4 mb-8 overflow-x-auto pb-2">
-            <button class="tab-button active px-6 py-3 rounded-xl glass whitespace-nowrap" onclick="showTab('top-achievers')">
-                🏆 Top Achievers
-            </button>
-            <button class="tab-button px-6 py-3 rounded-xl glass whitespace-nowrap" onclick="showTab('subject-analysis')">
-                📊 Analisis Mapel
-            </button>
-            <button class="tab-button px-6 py-3 rounded-xl glass whitespace-nowrap" onclick="showTab('statistics')">
-                📈 Statistik
-            </button>
-            <button class="tab-button px-6 py-3 rounded-xl glass whitespace-nowrap" onclick="showTab('insights')">
-                💡 Insights
-            </button>
-        </div>
-
-        <!-- Tab Content -->
-        <div id="top-achievers" class="tab-content">
-            <!-- Top 3 Students -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-                <!-- Sharon Carlossa L. -->
-                <div class="glass p-8 rounded-3xl card-hover glow sparkle">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="text-5xl">👑</div>
-                        <div class="px-4 py-1 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-xs font-bold text-white">
-                            ENGLISH CHAMPION
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 text-white">Sharon Carlossa L.</h3>
-                    <p class="text-slate-300 text-sm mb-6 mono">NISN: 0072869325</p>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Bahasa Inggris</span>
-                                <span class="text-sm font-bold text-yellow-300">45.61</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 91.22%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Bahasa Indonesia</span>
-                                <span class="text-sm font-bold text-pink-300">71.55</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 82.72%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Projek Kreatif</span>
-                                <span class="text-sm font-bold text-cyan-300">71.06</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 71.06%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Aldriano Bernard S. -->
-                <div class="glass p-8 rounded-3xl card-hover glow sparkle">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="text-5xl">🥇</div>
-                        <div class="px-4 py-1 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 text-xs font-bold text-white">
-                            PROJECT MASTER
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 text-white">Aldriano Bernard S.</h3>
-                    <p class="text-slate-300 text-sm mb-6 mono">NISN: 0087879698</p>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Projek Kreatif</span>
-                                <span class="text-sm font-bold text-purple-300">76.77</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 95%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Pendidikan Pancasila</span>
-                                <span class="text-sm font-bold text-blue-300">73.54</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 73.54%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Bahasa Indonesia</span>
-                                <span class="text-sm font-bold text-pink-300">70.58</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 70.58%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Marta H. Soakalune -->
-                <div class="glass p-8 rounded-3xl card-hover glow sparkle">
-                    <div class="flex items-center justify-between mb-6">
-                        <div class="text-5xl">🥈</div>
-                        <div class="px-4 py-1 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 text-xs font-bold text-white">
-                            MATH GENIUS
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 text-white">Marta H. Soakalune</h3>
-                    <p class="text-slate-300 text-sm mb-6 mono">NISN: 0087539145</p>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">B. Indo Lanjut</span>
-                                <span class="text-sm font-bold text-green-300">71.56</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 71.56%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Projek Kreatif</span>
-                                <span class="text-sm font-bold text-blue-300">63.99</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 63.99%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Bahasa Indonesia</span>
-                                <span class="text-sm font-bold text-purple-300">51.48</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 51.48%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-xs text-slate-200 font-medium">Matematika</span>
-                                <span class="text-sm font-bold text-pink-300">50.21</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 50.21%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- More Top Performers -->
-            <h2 class="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
-                <span class="text-3xl">🌟</span>
-                Prestasi Luar Biasa Lainnya
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
-                <div class="glass p-6 rounded-2xl stat-badge">
-                    <div class="text-xs text-slate-300 mb-2 mono font-medium">B. INDONESIA TINGKAT LANJUT</div>
-                    <div class="text-3xl font-black mb-2 gradient-text">91.65</div>
-                    <div class="text-sm text-white">Jesly Sarah Wakole</div>
-                </div>
-                <div class="glass p-6 rounded-2xl stat-badge">
-                    <div class="text-xs text-slate-300 mb-2 mono font-medium">BAHASA INDONESIA</div>
-                    <div class="text-3xl font-black mb-2 gradient-text">86.62</div>
-                    <div class="text-sm text-white">Kirana Citra Lestari</div>
-                </div>
-                <div class="glass p-6 rounded-2xl stat-badge">
-                    <div class="text-xs text-slate-300 mb-2 mono font-medium">BAHASA INDONESIA TINGKAT LANJUT</div>
-                    <div class="text-3xl font-black mb-2 gradient-text">81.94</div>
-                    <div class="text-sm text-white">Ismail Rahadi Sella</div>
-                </div>
-                <div class="glass p-6 rounded-2xl stat-badge">
-                    <div class="text-xs text-slate-300 mb-2 mono font-medium">BAHASA INDONESIA TINGKAT LANJUT</div>
-                    <div class="text-3xl font-black mb-2 gradient-text">80.87</div>
-                    <div class="text-sm text-white">Agustina Berlin M.</div>
-                </div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 LAPORAN HASIL TES KEMAMPUAN AKADEMIK</h1>
+            <h2>Tahun 2025</h2>
+            <div class="school-info">
+                <p><strong>SMK Negeri 1 Maluku Tengah</strong></p>
+                <p>NPSN: 60100166</p>
+                <p>Kabupaten Maluku Tengah, Provinsi Maluku</p>
+                <p><strong>Total Peserta: 140 Siswa</strong></p>
             </div>
         </div>
-
-        <!-- Subject Analysis Tab -->
-        <div id="subject-analysis" class="tab-content hidden">
-            <h2 class="text-3xl font-bold mb-8 text-white">📊 Analisis Per Mata Pelajaran</h2>
+        
+        <div class="content">
+            <!-- Ringkasan Statistik -->
+            <div class="section">
+                <div class="section-title">📈 Ringkasan Statistik Umum</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Peserta Tes</h3>
+                        <div class="stat-value">140</div>
+                        <div class="stat-label">Siswa</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Mata Pelajaran Wajib</h3>
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">B. Indonesia, Matematika, B. Inggris</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Mata Pelajaran Pilihan</h3>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Berbagai Peminatan</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Rata-rata Tertinggi</h3>
+                        <div class="stat-value">67,03</div>
+                        <div class="stat-label">Bahasa Indonesia Tingkat Lanjut</div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-                <!-- Core Subjects -->
-                <div class="glass p-8 rounded-3xl">
-                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">
-                        <span>📚</span> Mata Pelajaran Inti
-                    </h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-sm text-slate-200">Bahasa Indonesia</span>
-                                <span class="text-sm font-bold text-yellow-300">Max: 86.62</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 86.62%"></div>
+            <!-- Nilai Rata-rata Mata Pelajaran Wajib -->
+            <div class="section">
+                <div class="section-title">📚 Nilai Rata-Rata Mata Pelajaran Wajib</div>
+                <div class="chart-container">
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <div class="bar-label">Bahasa Indonesia</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-wajib" style="width: 50.69%">50,69</div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-sm text-slate-200">Matematika</span>
-                                <span class="text-sm font-bold text-purple-300">Max: 54.72</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 54.72%"></div>
+                        <div class="bar-item">
+                            <div class="bar-label">Matematika</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-wajib" style="width: 32.93%">32,93</div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-sm text-slate-200">Bahasa Inggris</span>
-                                <span class="text-sm font-bold text-pink-300">Max: 48.18</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 48.18%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Elective Subjects -->
-                <div class="glass p-8 rounded-3xl">
-                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2 text-white">
-                        <span>🎯</span> Mata Pelajaran Pilihan
-                    </h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-sm text-slate-200">B. Indonesia Lanjut</span>
-                                <span class="text-sm font-bold text-green-300">Max: 91.65</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 91.65%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-sm text-slate-200">Projek Kreatif</span>
-                                <span class="text-sm font-bold text-blue-300">Max: 76.77</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 76.77%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-sm text-slate-200">Sejarah</span>
-                                <span class="text-sm font-bold text-orange-300">Max: 79.88</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 79.88%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="text-sm text-slate-200">Pendidikan Pancasila</span>
-                                <span class="text-sm font-bold text-cyan-300">Max: 78.90</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 78.90%"></div>
+                        <div class="bar-item">
+                            <div class="bar-label">Bahasa Inggris</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-wajib" style="width: 23.96%">23,96</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Subject Champions -->
-            <h3 class="text-2xl font-bold mb-6 text-white">🏅 Juara Per Mata Pelajaran</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="glass p-5 rounded-2xl border-l-4 border-blue-400">
-                    <div class="text-xs text-slate-300 mb-1 mono font-medium">SEJARAH</div>
-                    <div class="text-2xl font-bold mb-1 text-white">79.88</div>
-                    <div class="text-sm text-slate-200">Gracia Alfa Maluta</div>
-                </div>
-                <div class="glass p-5 rounded-2xl border-l-4 border-purple-400">
-                    <div class="text-xs text-slate-300 mb-1 mono font-medium">EKONOMI</div>
-                    <div class="text-2xl font-bold mb-1 text-white">53.45</div>
-                    <div class="text-sm text-slate-200">Vanel Kiler Ukru</div>
-                </div>
-                <div class="glass p-5 rounded-2xl border-l-4 border-pink-400">
-                    <div class="text-xs text-slate-300 mb-1 mono font-medium">BIOLOGI</div>
-                    <div class="text-2xl font-bold mb-1 text-white">66.55</div>
-                    <div class="text-sm text-slate-200">Rayhan Akram</div>
-                </div>
-                <div class="glass p-5 rounded-2xl border-l-4 border-green-400">
-                    <div class="text-xs text-slate-300 mb-1 mono font-medium">FISIKA</div>
-                    <div class="text-2xl font-bold mb-1 text-white">47.10</div>
-                    <div class="text-sm text-slate-200">Revand Noris Yamlean</div>
-                </div>
-                <div class="glass p-5 rounded-2xl border-l-4 border-orange-400">
-                    <div class="text-xs text-slate-300 mb-1 mono font-medium">KIMIA</div>
-                    <div class="text-2xl font-bold mb-1 text-white">31.48</div>
-                    <div class="text-sm text-slate-200">Graiyen Herman Yasso</div>
-                </div>
-                <div class="glass p-5 rounded-2xl border-l-4 border-cyan-400">
-                    <div class="text-xs text-slate-300 mb-1 mono font-medium">B. INGGRIS LANJUT</div>
-                    <div class="text-2xl font-bold mb-1 text-white">55.59</div>
-                    <div class="text-sm text-slate-200">Grasian Lasamahu</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Statistics Tab -->
-        <div id="statistics" class="tab-content hidden">
-            <h2 class="text-3xl font-bold mb-8 text-white">📈 Statistik Keseluruhan</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <div class="glass p-6 rounded-2xl text-center">
-                    <div class="text-4xl mb-2">🎯</div>
-                    <div class="text-3xl font-bold gradient-text mb-1">91.65</div>
-                    <div class="text-xs text-slate-200 font-medium">Skor Tertinggi</div>
-                    <div class="text-xs text-slate-400 mt-1">B. Indo Lanjut</div>
-                </div>
-                <div class="glass p-6 rounded-2xl text-center">
-                    <div class="text-4xl mb-2">📊</div>
-                    <div class="text-3xl font-bold gradient-text mb-1">52.5</div>
-                    <div class="text-xs text-slate-200 font-medium">Rata-rata Umum</div>
-                    <div class="text-xs text-slate-400 mt-1">Semua Mapel</div>
-                </div>
-                <div class="glass p-6 rounded-2xl text-center">
-                    <div class="text-4xl mb-2">👥</div>
-                    <div class="text-3xl font-bold gradient-text mb-1">138</div>
-                    <div class="text-xs text-slate-200 font-medium">Total Siswa</div>
-                    <div class="text-xs text-slate-400 mt-1">Mengikuti TKA</div>
-                </div>
-                <div class="glass p-6 rounded-2xl text-center">
-                    <div class="text-4xl mb-2">⭐</div>
-                    <div class="text-3xl font-bold gradient-text mb-1">45</div>
-                    <div class="text-xs text-slate-200 font-medium">Skor Istimewa</div>
-                    <div class="text-xs text-slate-400 mt-1">≥ 70 poin</div>
+            <!-- Nilai Rata-rata Mata Pelajaran Pilihan -->
+            <div class="section">
+                <div class="section-title">🎯 Nilai Rata-Rata Mata Pelajaran Pilihan</div>
+                <div class="chart-container">
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <div class="bar-label">Bahasa Indonesia Lanjut</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 67.03%">67,03</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Sejarah</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 61.07%">61,07</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Biologi</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 57.90%">57,90</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">PKK</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 55.45%">55,45</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">PPKn</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 55.18%">55,18</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Bahasa Inggris Lanjut</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 38.29%">38,29</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Fisika</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 37.58%">37,58</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Matematika Lanjut</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 33.09%">33,09</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Ekonomi</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 32.90%">32,90</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Kimia</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 31.48%">31,48</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Bahasa Jerman</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 30.55%">30,55</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">Sosiologi</div>
+                            <div class="bar-wrapper">
+                                <div class="bar-fill bar-pilihan" style="width: 44.33%">44,33</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Performance Distribution -->
-            <div class="glass p-8 rounded-3xl mb-12">
-                <h3 class="text-xl font-bold mb-6 text-white">Distribusi Performa</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    <div class="text-center">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mb-3">
-                            <span class="text-2xl font-bold text-white">15%</span>
-                        </div>
-                        <div class="text-sm font-semibold text-white">Memadai</div>
-                        <div class="text-xs text-slate-300">30-49</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center mb-3">
-                            <span class="text-2xl font-bold text-white">20%</span>
-                        </div>
-                        <div class="text-sm font-semibold text-white">Kurang</div>
-                        <div class="text-xs text-slate-300">< 30</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Insights Tab -->
-        <div id="insights" class="tab-content hidden">
-            <h2 class="text-3xl font-bold mb-8 text-white">💡 Insights & Rekomendasi</h2>
             
-            <div class="space-y-6">
-                <div class="glass p-8 rounded-3xl border-l-4 border-blue-400">
-                    <div class="flex items-start gap-4">
-                        <div class="text-4xl">🎯</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2 text-white">Prestasi Luar Biasa di Bahasa Indonesia</h3>
-                            <p class="text-slate-200 leading-relaxed">
-                                Bahasa Indonesia Tingkat Lanjut menunjukkan performa terbaik dengan skor tertinggi <strong class="text-yellow-300">91.65</strong>. 
-                                Ini membuktikan siswa memiliki kemampuan literasi yang sangat baik. Pertahankan momentum ini dengan lebih banyak latihan membaca dan menulis esai.
-                            </p>
-                        </div>
-                    </div>
+            <!-- Siswa Berprestasi Terbaik -->
+            <div class="section">
+                <div class="section-title">🏆 Siswa dengan Nilai Tertinggi per Mata Pelajaran</div>
+                
+                <h3 style="color: #1e3c72; margin: 20px 0 15px 0; font-size: 20px;">Mata Pelajaran Wajib</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">Rank</th>
+                                <th>Mata Pelajaran</th>
+                                <th>Nama Siswa</th>
+                                <th>NISN</th>
+                                <th style="width: 100px;">Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td><span class="rank-badge rank-1">1</span></td>
+                                <td><strong>Bahasa Indonesia</strong></td>
+                                <td>KIRANA CITRA LESTARI</td>
+                                <td>0081703947</td>
+                                <td><strong>86,62</strong></td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td><span class="rank-badge rank-2">2</span></td>
+                                <td><strong>Matematika</strong></td>
+                                <td>Three Ayu Ohello</td>
+                                <td>0085032124</td>
+                                <td><strong>54,72</strong></td>
+                            </tr>
+                            <tr class="highlight-row">
+                                <td><span class="rank-badge rank-3">3</span></td>
+                                <td><strong>Bahasa Inggris</strong></td>
+                                <td>GRASIAN LASAMAHU</td>
+                                <td>0081801551</td>
+                                <td><strong>48,18</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="glass p-8 rounded-3xl border-l-4 border-purple-400">
-                    <div class="flex items-start gap-4">
-                        <div class="text-4xl">📈</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2 text-white">Potensi Peningkatan Matematika</h3>
-                            <p class="text-slate-200 leading-relaxed">
-                                Meskipun rata-rata Matematika berada di angka 30-an, pencapaian <strong class="text-purple-300">Marta H. Soakalune (50.21)</strong> 
-                                membuktikan bahwa peningkatan signifikan sangat mungkin dicapai. Fokus pada pemahaman konsep dasar dan latihan soal rutin.
-                            </p>
-                        </div>
-                    </div>
+                
+                <h3 style="color: #1e3c72; margin: 30px 0 15px 0; font-size: 20px;">Mata Pelajaran Pilihan</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">Rank</th>
+                                <th>Mata Pelajaran</th>
+                                <th>Nama Siswa</th>
+                                <th>NISN</th>
+                                <th style="width: 100px;">Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight-row">
+                                <td><span class="rank-badge rank-1">⭐</span></td>
+                                <td><strong>Bahasa Indonesia Lanjut</strong></td>
+                                <td>JESLY SARAH WAKOLE</td>
+                                <td>0088365799</td>
+                                <td><strong>91,65</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Sejarah</strong></td>
+                                <td>GRACIA ALFA MALUTA</td>
+                                <td>0088706165</td>
+                                <td><strong>79,88</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>PPKn</strong></td>
+                                <td>GRACIA ALFA MALUTA</td>
+                                <td>0088706165</td>
+                                <td><strong>78,90</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>PKK</strong></td>
+                                <td>ALDRIANO BERNARD SABONWALY</td>
+                                <td>0087879698</td>
+                                <td><strong>76,77</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Biologi</strong></td>
+                                <td>Rayhan Akram</td>
+                                <td>0075785943</td>
+                                <td><strong>66,55</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Bahasa Inggris Lanjut</strong></td>
+                                <td>GRASIAN LASAMAHU</td>
+                                <td>0081801551</td>
+                                <td><strong>55,59</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Ekonomi</strong></td>
+                                <td>Vanel Kiler Ukru</td>
+                                <td>0089638463</td>
+                                <td><strong>53,45</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Fisika</strong></td>
+                                <td>REVAND NORIS YAMLEAN</td>
+                                <td>0087212250</td>
+                                <td><strong>47,10</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Sosiologi</strong></td>
+                                <td>ESTER KAPITAN</td>
+                                <td>0082819749</td>
+                                <td><strong>44,33</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Matematika Lanjut</strong></td>
+                                <td>Ildhan Maulana Subhan</td>
+                                <td>0091819402</td>
+                                <td><strong>41,83</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Kimia</strong></td>
+                                <td>Graiyen Herman Yasso</td>
+                                <td>0089211356</td>
+                                <td><strong>31,48</strong></td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-1">🏆</span></td>
+                                <td><strong>Bahasa Jerman</strong></td>
+                                <td>CHRISMEN VARLY UBYAAN</td>
+                                <td>0078364683</td>
+                                <td><strong>30,55</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="glass p-8 rounded-3xl border-l-4 border-pink-400">
-                    <div class="flex items-start gap-4">
-                        <div class="text-4xl">🌟</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2 text-white">Dominasi Projek Kreatif</h3>
-                            <p class="text-slate-200 leading-relaxed">
-                                <strong class="text-pink-300">Aldriano Bernard S.</strong> meraih skor tertinggi <strong>76.77</strong> di Projek Kreatif dan Kewirausahaan. 
-                                Ini menunjukkan kreativitas dan kemampuan problem-solving yang excellent. Manfaatkan ini untuk kompetisi dan olimpiade.
-                            </p>
-                        </div>
-                    </div>
+            </div>
+            
+            <!-- Analisis dan Rekomendasi -->
+            <div class="section">
+                <div class="section-title">💡 Analisis dan Rekomendasi</div>
+                
+                <div class="summary-box">
+                    <h3>📊 Temuan Utama</h3>
+                    <ul>
+                        <li><strong>Prestasi Luar Biasa:</strong> JESLY SARAH WAKOLE meraih nilai tertinggi (91,65) pada Bahasa Indonesia Tingkat Lanjut</li>
+                        <li><strong>Performa Terbaik:</strong> Mata pelajaran Bahasa Indonesia Tingkat Lanjut memiliki rata-rata tertinggi (67,03)</li>
+                        <li><strong>Perlu Perhatian Khusus:</strong> Bahasa Inggris memiliki rata-rata terendah (23,96) dengan banyak siswa mendapat nilai 5,00</li>
+                        <li><strong>Matematika:</strong> Rata-rata 32,93 menunjukkan perlunya penguatan pemahaman konsep dasar</li>
+                        <li><strong>Mata Pelajaran Pilihan:</strong> Sejarah (61,07) dan Biologi (57,90) menunjukkan minat dan pemahaman yang baik</li>
+                    </ul>
                 </div>
-
-                <div class="glass p-8 rounded-3xl border-l-4 border-green-400">
-                    <div class="flex items-start gap-4">
-                        <div class="text-4xl">💪</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2 text-white">Strategi Peningkatan Bahasa Inggris</h3>
-                            <p class="text-slate-200 leading-relaxed">
-                                Dengan skor tertinggi <strong class="text-green-300">48.18</strong>, Bahasa Inggris masih memiliki ruang besar untuk perbaikan. 
-                                Rekomendasikan: listening practice harian, reading English articles, dan conversation clubs untuk meningkatkan fluency.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="glass p-8 rounded-3xl border-l-4 border-orange-400">
-                    <div class="flex items-start gap-4">
-                        <div class="text-4xl">🎓</div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-2 text-white">Rekomendasi Program Intensif</h3>
-                            <p class="text-slate-200 leading-relaxed mb-4">
-                                Berdasarkan analisis data, berikut program yang direkomendasikan:
-                            </p>
-                            <ul class="space-y-2 text-slate-200">
-                                <li class="flex items-start gap-2">
-                                    <span class="text-blue-300">▸</span>
-                                    <span><strong>Matematika:</strong> Kelas remedial dan bimbingan intensif untuk siswa dengan skor < 40</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-purple-300">▸</span>
-                                    <span><strong>Bahasa Inggris:</strong> English club dan conversation practice 3x seminggu</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-pink-300">▸</span>
-                                    <span><strong>Projek Kreatif:</strong> Workshop dan mentoring untuk siswa berbakat</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <span class="text-green-300">▸</span>
-                                    <span><strong>Literasi:</strong> Program reading marathon dan writing competition</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                
+                <div class="summary-box" style="background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); border-left-color: #00acc1;">
+                    <h3 style="color: #00838f;">🎯 Rekomendasi Tindak Lanjut</h3>
+                    <ul>
+                        <li><strong>Program Remedial Bahasa Inggris:</strong> Perlu program intensif untuk meningkatkan kemampuan dasar bahasa Inggris</li>
+                        <li><strong>Bimbingan Matematika:</strong> Implementasi program tutorial matematika dengan pendekatan yang lebih kontekstual</li>
+                        <li><strong>Pengayaan untuk Siswa Berprestasi:</strong> Program pengembangan bakat bagi siswa dengan nilai tinggi</li>
+                        <li><strong>Pembinaan Guru:</strong> Workshop metodologi pembelajaran untuk mata pelajaran dengan nilai rendah</li>
+                        <li><strong>Peminatan Siswa:</strong> Bimbingan konseling untuk memilih jurusan sesuai kemampuan akademik</li>
+                        <li><strong>Keterlibatan Orang Tua:</strong> Komunikasi intensif dengan orang tua untuk pendampingan belajar di rumah</li>
+                    </ul>
                 </div>
             </div>
         </div>
-
-        <!-- Footer Info -->
-        <div class="mt-16 glass p-8 rounded-3xl text-center">
-            <div class="flex items-center justify-center gap-3 mb-4">
-                <span class="text-3xl">🏫</span>
-                <h3 class="text-2xl font-bold text-white">SMK Negeri 1 Maluku Tengah</h3>
-            </div>
-            <p class="text-slate-200 mb-2">TES KEMAMPUAN AKADEMIK 2025</p>
-            <div class="mt-6 flex justify-center gap-4 flex-wrap">
-                <div class="px-4 py-2 rounded-lg bg-blue-400/30 text-blue-100 text-xs">
-                    📍 Maluku Tengah
-                </div>
-                <div class="px-4 py-2 rounded-lg bg-purple-400/30 text-purple-100 text-xs">
-                    🆔 NPSN: 60100166
-                </div>
-                <div class="px-4 py-2 rounded-lg bg-pink-400/30 text-pink-100 text-xs">
-                    📊 138 Peserta
-                </div>
-            </div>
+        
+        <div class="footer">
+            <p><strong>SMK Negeri 1 Maluku Tengah</strong></p>
+            <p>Laporan Hasil Tes Kemampuan Akademik Tahun 2025</p>
+            <p style="margin-top: 10px; font-size: 12px;">Dicetak pada: <span id="printDate"></span></p>
         </div>
     </div>
-
+    
     <script>
-        // Tab switching functionality
-        function showTab(tabName) {
-            // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.add('hidden'));
-            
-            // Show selected tab
-            document.getElementById(tabName).classList.remove('hidden');
-            
-            // Update button states
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        // Animate progress bars on load
-        window.addEventListener('load', () => {
-            const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach(bar => {
+        // Set tanggal cetak
+        document.getElementById('printDate').textContent = new Date().toLocaleDateString('id-ID', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        
+        // Animasi chart saat halaman dimuat
+        window.addEventListener('load', function() {
+            const bars = document.querySelectorAll('.bar-fill');
+            bars.forEach((bar, index) => {
                 const width = bar.style.width;
-                bar.style.width = '0';
+                bar.style.width = '0%';
                 setTimeout(() => {
                     bar.style.width = width;
-                }, 100);
+                }, index * 100);
             });
         });
-
-        // Add sparkle effect periodically
-        setInterval(() => {
-            const sparkles = document.querySelectorAll('.sparkle');
-            sparkles.forEach(el => {
-                el.style.animation = 'none';
-                setTimeout(() => {
-                    el.style.animation = '';
-                }, 10);
-            });
-        }, 3000);
     </script>
-
 </body>
-</html>">Istimewa</div>
-                        <div class="text-xs text-slate-300">≥ 70</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center mb-3">
-                            <span class="text-2xl font-bold text-white">35%</span>
-                        </div>
-                        <div class="text-sm font-semibold text-white">Baik</div>
-                        <div class="text-xs text-slate-300">50-69</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center mb-3">
-                            <span class="text-2xl font-bold text-white">30%</span>
-                        </div>
-                        <div class="text-sm font-semibold text-white
+</html>
